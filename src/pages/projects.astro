@@ -1,0 +1,54 @@
+---
+import Base from "../layouts/Base.astro";
+
+const projects = [
+  {
+    name: "Actionable AI",
+    tags: "AI · Productivity",
+    description: "PLACEHOLDER — brief description of what Actionable AI does and who it is for.",
+    url: "https://PLACEHOLDER",
+    urlLabel: "Live site",
+    github: "",
+  },
+  {
+    name: "Zerodha Portfolio Analyzer",
+    tags: "Finance · Python",
+    description: "Tool for analyzing Zerodha brokerage portfolios — performance attribution, sector exposure, and position-level risk metrics.",
+    url: "",
+    urlLabel: "",
+    github: "https://github.com/PLACEHOLDER",
+  },
+  {
+    name: "Project 3 — PLACEHOLDER",
+    tags: "Tag · Tag",
+    description: "PLACEHOLDER description.",
+    url: "https://PLACEHOLDER",
+    urlLabel: "Live site",
+    github: "",
+  },
+];
+---
+
+<Base title="Projects" description="Side projects and tools by Ambuj Tripathi.">
+  <h1 class="page-title">Projects</h1>
+  <p class="page-subtitle">Tools and experiments built outside of work.</p>
+
+  <ul class="project-list">
+    {projects.map(project => (
+      <li class="project-card">
+        <div class="tags">{project.tags}</div>
+        <h3>
+          {project.url
+            ? <a href={project.url} target="_blank" rel="noopener">{project.name}</a>
+            : project.name
+          }
+        </h3>
+        <p class="description">{project.description}</p>
+        <div class="links">
+          {project.url && <a href={project.url} target="_blank" rel="noopener">{project.urlLabel} ↗</a>}
+          {project.github && <a href={project.github} target="_blank" rel="noopener">GitHub ↗</a>}
+        </div>
+      </li>
+    ))}
+  </ul>
+</Base>

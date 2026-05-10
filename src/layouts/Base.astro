@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Ambuj Tripathi — credit analyst and writer based in the Netherlands." } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: "/about", label: "About" },
+  { href: "/experience", label: "Experience" },
+  { href: "/writing", label: "Writing" },
+  { href: "/projects", label: "Projects" },
+  { href: "/photography", label: "Photography" },
+  { href: "/contact", label: "Contact" },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title === "Ambuj Tripathi" ? title : `${title} — Ambuj Tripathi`}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <nav>
+      <a class="site-name" href="/">Ambuj Tripathi</a>
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class={currentPath.startsWith(link.href) ? "active" : ""}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <span>ambuj@ambujtripathi.nl</span>
+      <span>
+        <a href="https://linkedin.com/in/PLACEHOLDER" target="_blank" rel="noopener">LinkedIn</a>
+        &nbsp;·&nbsp;
+        <a href="https://substack.com/@PLACEHOLDER" target="_blank" rel="noopener">Substack</a>
+      </span>
+    </footer>
+  </body>
+</html>
+
+<style is:global src="../styles/global.css"></style>

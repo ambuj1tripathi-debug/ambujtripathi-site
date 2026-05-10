@@ -1,0 +1,60 @@
+---
+import Base from "../layouts/Base.astro";
+
+const articles = [
+  {
+    title: "The Strait of Hormuz and the Energy Transition [PLACEHOLDER TITLE]",
+    date: "Month Year",
+    publication: "Substack",
+    url: "https://substack.com/@PLACEHOLDER",
+    description: "Two-to-three line description of the piece — what argument it makes, why it matters. PLACEHOLDER.",
+  },
+  {
+    title: "Article 2 Title — PLACEHOLDER",
+    date: "Month Year",
+    publication: "Medium",
+    url: "https://medium.com/@PLACEHOLDER",
+    description: "Two-to-three line description of the piece. PLACEHOLDER.",
+  },
+  {
+    title: "Article 3 Title — PLACEHOLDER",
+    date: "Month Year",
+    publication: "Substack",
+    url: "https://substack.com/@PLACEHOLDER",
+    description: "Two-to-three line description of the piece. PLACEHOLDER.",
+  },
+  {
+    title: "Article 4 Title — PLACEHOLDER",
+    date: "Month Year",
+    publication: "Medium",
+    url: "https://medium.com/@PLACEHOLDER",
+    description: "Two-to-three line description of the piece. PLACEHOLDER.",
+  },
+  {
+    title: "Article 5 Title — PLACEHOLDER",
+    date: "Month Year",
+    publication: "Substack",
+    url: "https://substack.com/@PLACEHOLDER",
+    description: "Two-to-three line description of the piece. PLACEHOLDER.",
+  },
+];
+---
+
+<Base title="Writing" description="Articles by Ambuj Tripathi on energy transition, sovereign credit, and infrastructure finance.">
+  <h1 class="page-title">Writing</h1>
+  <p class="page-subtitle">
+    Essays on energy transition, sovereign credit, and the economics of infrastructure.
+    Published on <a href="https://substack.com/@PLACEHOLDER" target="_blank" rel="noopener">Substack</a>
+    and <a href="https://medium.com/@PLACEHOLDER" target="_blank" rel="noopener">Medium</a>.
+  </p>
+
+  <ul class="article-list">
+    {articles.map(article => (
+      <li class="article-card">
+        <div class="meta">{article.publication} · {article.date}</div>
+        <h3><a href={article.url} target="_blank" rel="noopener">{article.title}</a></h3>
+        <p class="description">{article.description}</p>
+      </li>
+    ))}
+  </ul>
+</Base>

@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+
+// Add photo filenames to public/photos/ and list them here
+const photos = [
+  "photo-01.jpg",
+  "photo-02.jpg",
+  "photo-03.jpg",
+  "photo-04.jpg",
+  "photo-05.jpg",
+  "photo-06.jpg",
+  "photo-07.jpg",
+  "photo-08.jpg",
+  "photo-09.jpg",
+];
+---
+
+<Base title="Photography" description="Street and travel photography by Ambuj Tripathi.">
+  <h1 class="page-title">Photography</h1>
+  <p class="page-subtitle">
+    Street and travel photography, mostly Amsterdam and wherever else.
+    If something catches your eye:
+    <a href="https://buymeacoffee.com/PLACEHOLDER" target="_blank" rel="noopener">Buy Me a Coffee</a>.
+  </p>
+
+  <div class="photo-grid">
+    {photos.map(photo => (
+      <img src={`/photos/${photo}`} alt="" loading="lazy" />
+    ))}
+  </div>
+</Base>
