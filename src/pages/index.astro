@@ -195,6 +195,32 @@
       text-shadow:0 1px 6px rgba(0,0,0,0.3);
     }
 
+    /* ── Author strip ── */
+    .author-strip {
+      display:flex; align-items:center; gap:24px;
+      padding:32px 64px;
+      border-bottom:0.5px solid var(--ruleS);
+      background:var(--paper);
+    }
+    .author-portrait {
+      width:72px; height:72px;
+      border-radius:50%;
+      object-fit:cover; object-position:center top;
+      border:1.5px solid var(--paperD);
+      flex-shrink:0;
+    }
+    .author-portrait-fallback {
+      width:72px; height:72px; border-radius:50%; flex-shrink:0;
+      background:linear-gradient(135deg,var(--sky),var(--linen));
+    }
+    .author-strip-name {
+      font-family:'Cormorant Garamond',serif;
+      font-size:18px; font-weight:500; color:var(--ink); line-height:1;
+    }
+    .author-strip-line {
+      font-size:13px; color:var(--ink2); margin-top:5px; letter-spacing:0.01em;
+    }
+
     /* ── Now strip ── */
     .now-strip {
       padding:40px 64px;
@@ -711,6 +737,21 @@
     <div class="hero-self serif">— a self portrait, sort of.</div>
   </div>
 </section>
+
+<!-- AUTHOR STRIP -->
+<div class="author-strip fade-up">
+  <img
+    src="/ambuj-portrait.jpg"
+    alt="Ambuj Tripathi"
+    class="author-portrait"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+  />
+  <div class="author-portrait-fallback" style="display:none"></div>
+  <div class="author-strip-bio">
+    <div class="author-strip-name serif">Ambuj Tripathi</div>
+    <div class="author-strip-line">Finance professional · Utrecht · Author, <em>Accounts of Life</em></div>
+  </div>
+</div>
 
 <!-- NOW STRIP -->
 <div class="now-strip fade-up">
