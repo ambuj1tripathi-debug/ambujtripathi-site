@@ -25,10 +25,13 @@ const navLinks = [
     <meta name="description" content={description} />
     <title>{title === "Ambuj Tripathi" ? title : `${title} — Ambuj Tripathi`}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   </head>
   <body>
     <nav>
-      <a class="site-name" href="/">Ambuj Tripathi</a>
+      <a class="site-name" href="/">Ambuj <em>Tripathi</em></a>
       {navLinks.map(link => (
         <a
           href={link.href}
