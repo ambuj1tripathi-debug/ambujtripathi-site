@@ -701,10 +701,18 @@
       <div class="hero-eyebrow">
         <span class="hero-eyebrow-line"></span>
       </div>
-      <h1 class="hero-name serif">
-        Ambuj<br/>
-        <span class="fog-text">Tripathi</span>
-      </h1>
+      <div style="display:flex;align-items:center;gap:20px;margin-bottom:4px">
+        <img
+          src="/ambuj-portrait.jpg"
+          alt="Ambuj Tripathi"
+          style="width:100px;height:100px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid var(--paperD);flex-shrink:0"
+          onerror="this.style.display='none'"
+        />
+        <h1 class="hero-name serif" style="margin:0">
+          Ambuj<br/>
+          <span class="fog-text">Tripathi</span>
+        </h1>
+      </div>
       <p class="hero-role">Finance · Credit Risk<br/>Development Finance · Photography</p>
       <p class="hero-bio">
         MBA-trained finance professional writing at the intersection of
@@ -737,21 +745,6 @@
     <div class="hero-self serif">— a self portrait, sort of.</div>
   </div>
 </section>
-
-<!-- AUTHOR STRIP -->
-<div class="author-strip fade-up">
-  <img
-    src="/ambuj-portrait.jpg"
-    alt="Ambuj Tripathi"
-    class="author-portrait"
-    onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
-  />
-  <div class="author-portrait-fallback" style="display:none"></div>
-  <div class="author-strip-bio">
-    <div class="author-strip-name serif">Ambuj Tripathi</div>
-    <div class="author-strip-line">Finance professional · Utrecht · Author, <em>Accounts of Life</em></div>
-  </div>
-</div>
 
 
 <!-- REPORTS -->
