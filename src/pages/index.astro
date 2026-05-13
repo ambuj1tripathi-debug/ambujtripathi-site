@@ -36,6 +36,31 @@
       --edge2:  rgba(255,255,255,0.18);
       --fog-grad: linear-gradient(90deg, #b9c8d4 0%, #c8c0c6 35%, #d4c0a8 70%, #c6b09c 100%);
     }
+    [data-theme="dark"] {
+      --paper:  #1a1f26;
+      --paper2: #1f252d;
+      --paperD: #252c36;
+      --ink:    #e8e0d0;
+      --ink2:   #a8b4c0;
+      --mist:   #6a7a88;
+      --fog:    #4a5a6a;
+      --sky:    #3a4e5e;
+      --sky2:   #2e404e;
+      --seaD:   #7a9ab0;
+      --sea:    #5a7a90;
+      --linen:  #5a4a3a;
+      --night:  #0e1318;
+      --nightD: #080c10;
+      --rule:   rgba(232,224,208,0.12);
+      --ruleS:  rgba(232,224,208,0.08);
+      --edge:   rgba(255,255,255,0.06);
+      --edge2:  rgba(255,255,255,0.10);
+    }
+    [data-theme="dark"] nav {
+      background: rgba(26,31,38,0.92);
+    }
+    [data-theme="dark"] .btn-theme { color: var(--ink2); }
+    [data-theme="dark"] .hero-right img { filter: brightness(0.85); }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; font-size:16px; }
     body {
@@ -91,6 +116,13 @@
       width:6px; height:6px; border-radius:50%;
       background:var(--sea); box-shadow:0 0 8px rgba(146,167,183,0.6);
     }
+    .btn-theme {
+      background:none; border:none; cursor:pointer;
+      font-size:15px; line-height:1; padding:2px 4px;
+      color:var(--mist); transition:color .2s;
+      margin-left:12px;
+    }
+    .btn-theme:hover { color:var(--ink); }
 
     /* ── Hero ── */
     .hero {
@@ -690,6 +722,7 @@
   <div class="nav-status">
     <span class="nav-dot"></span>
     Utrecht · afternoon light
+    <button class="btn-theme" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">☽</button>
   </div>
 </nav>
 
@@ -1087,6 +1120,20 @@
 </footer>
 
 <script>
+// Dark mode
+(function() {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') { root.setAttribute('data-theme','dark'); btn.textContent = '○'; }
+  btn.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    btn.textContent = isDark ? '☽' : '○';
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  });
+})();
+
 const obs = new IntersectionObserver(entries => {
   entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); obs.unobserve(en.target); } });
 }, { threshold: 0.08 });
