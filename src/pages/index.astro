@@ -395,6 +395,8 @@
     .gallery-row1-right { display:grid; grid-template-rows:1fr 1fr; gap:6px; }
     .gallery-row2 { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; height:200px; }
     .gallery-row3 { display:grid; grid-template-columns:1fr 1.4fr 1fr; gap:6px; margin-top:6px; height:220px; }
+    .gallery-row4 { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; height:200px; }
+    .gallery-row5 { display:grid; grid-template-columns:1fr 1.6fr 1fr; gap:6px; margin-top:6px; height:240px; }
 
     /* ── Writing ── */
     .writing-list { border-top:0.5px solid var(--ruleS); }
@@ -691,6 +693,10 @@
       .gallery-row2 .gk{height:180px}
       .gallery-row3{grid-template-columns:1fr 1fr;height:auto}
       .gallery-row3 .gk{height:180px}
+      .gallery-row4{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-row4 .gk{height:180px}
+      .gallery-row5{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-row5 .gk{height:180px}
       .places-strip{grid-template-columns:repeat(2,1fr)}
       .book-callout{grid-template-columns:1fr}
       .writing-row { grid-template-columns:1fr; gap:8px; }
@@ -840,7 +846,7 @@
     </div>
     <span class="gl-section-link">Full gallery →</span>
   </div>
-  <!-- Row 1: tall hero left + 2 stacked right -->
+  <!-- Row 1: tall left + 2 stacked right (photos 1–3) -->
   <div class="gallery-row1">
     <div class="gk">
       <img src="/utrecht-1.jpg" alt="Early spring, still" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
@@ -863,7 +869,7 @@
       </div>
     </div>
   </div>
-  <!-- Row 2: 4 equal -->
+  <!-- Row 2: 4 equal (photos 4–7) -->
   <div class="gallery-row2">
     <div class="gk">
       <img src="/utrecht-4.jpg" alt="November mist" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
@@ -890,7 +896,7 @@
       <span class="gk-caption serif">Frames, water</span>
     </div>
   </div>
-  <!-- Row 3: 3 varied widths -->
+  <!-- Row 3: varied widths (photos 8–10) -->
   <div class="gallery-row3">
     <div class="gk">
       <img src="/utrecht-8.jpg" alt="Winter noon" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
@@ -909,6 +915,54 @@
       <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#d6c2b0,#c4a882)"></div>
       <div class="gk-overlay"></div>
       <span class="gk-caption serif">Golden hour</span>
+    </div>
+  </div>
+  <!-- Row 4: 4 equal (photos 11–14) -->
+  <div class="gallery-row4">
+    <div class="gk">
+      <img src="/utrecht-11.jpg" alt="Summer light" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#d4c0a8,#c6b09c)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Summer light</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-12.jpg" alt="Canal, August" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(140deg,#b9c8d4,#8896a4)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Canal, August</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-13.jpg" alt="Quiet afternoon" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(155deg,#92a7b7,#6f879a)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Quiet afternoon</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-14.jpg" alt="Bridge & shadow" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(150deg,#8896a4,#6a7a88)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Bridge &amp; shadow</span>
+    </div>
+  </div>
+  <!-- Row 5: wide centre (photos 15–17) -->
+  <div class="gallery-row5">
+    <div class="gk">
+      <img src="/utrecht-15.jpg" alt="Morning walk" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#c8c0c6,#b9c8d4)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Morning walk</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-16.jpg" alt="Oudegracht" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(140deg,#92a7b7,#d4c0a8)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Oudegracht</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-17.jpg" alt="End of day" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(155deg,#d6c2b0,#b9a08e)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">End of day</span>
     </div>
   </div>
 </div>
