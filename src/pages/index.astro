@@ -1,7 +1,5 @@
 ---
-// Photos go in /public/ — drop files named:
-//   ambuj-window.jpg  → hero right panel (the cafe photo)
-//   gallery-1.jpg … gallery-3.jpg → photography section
+// Photos: ambuj-window.jpg = hero; utrecht-1.jpg … utrecht-10.jpg = gallery
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -316,25 +314,29 @@
     }
 
     /* ── Gallery ── */
-    .gallery-grid {
-      display:grid; grid-template-columns:1.6fr 1fr; gap:6px; height:360px;
-    }
     .gk { position:relative; overflow:hidden; background:var(--sky2); }
     .gk img {
       position:absolute; inset:0; width:100%; height:100%;
-      object-fit:cover; transition:transform .6s ease;
+      object-fit:cover; transition:transform .6s ease; display:block;
     }
     .gk:hover img { transform:scale(1.04); }
-    .gk-fallback {
-      position:absolute; inset:0; width:100%; height:100%;
-    }
+    .gk-fallback { position:absolute; inset:0; width:100%; height:100%; }
     .gk-caption {
-      position:absolute; left:18px; bottom:16px;
+      position:absolute; left:14px; bottom:12px;
       font-family:'Cormorant Garamond',serif; font-style:italic;
-      font-size:14px; color:rgba(236,230,214,0.92);
-      text-shadow:0 1px 4px rgba(0,0,0,0.35);
+      font-size:13px; color:rgba(236,230,214,0.9);
+      text-shadow:0 1px 4px rgba(0,0,0,0.4);
+      pointer-events:none;
     }
-    .gallery-side { display:grid; grid-template-rows:1fr 1fr; gap:6px; }
+    .gk-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(180deg,transparent 55%,rgba(42,53,64,0.45) 100%);
+      pointer-events:none;
+    }
+    .gallery-row1 { display:grid; grid-template-columns:1.6fr 1fr; gap:6px; height:420px; }
+    .gallery-row1-right { display:grid; grid-template-rows:1fr 1fr; gap:6px; }
+    .gallery-row2 { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; height:200px; }
+    .gallery-row3 { display:grid; grid-template-columns:1fr 1.4fr 1fr; gap:6px; margin-top:6px; height:220px; }
 
     /* ── Writing ── */
     .writing-list { border-top:0.5px solid var(--ruleS); }
@@ -544,6 +546,70 @@
       font-style:italic; font-size:13px; color:#7a8896;
     }
 
+    /* ── Places ── */
+    .places-strip {
+      display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
+      background:var(--ruleS);
+    }
+    .place-card {
+      background:var(--paper2); padding:20px 18px;
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .place-code {
+      font-size:9px; letter-spacing:0.32em; text-transform:uppercase;
+      color:var(--seaD);
+    }
+    .place-name {
+      font-family:'Cormorant Garamond',serif;
+      font-size:18px; color:var(--ink); font-weight:400; line-height:1.2;
+    }
+    .place-note {
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      font-size:12px; color:var(--mist); line-height:1.4;
+    }
+
+    /* ── Accounts of Life ── */
+    .book-callout {
+      display:grid; grid-template-columns:1fr 1.8fr; gap:0;
+      margin-top:0; border:0.5px solid var(--ruleS);
+    }
+    .book-spine {
+      background:var(--night); padding:36px 28px;
+      display:flex; flex-direction:column; justify-content:space-between;
+      position:relative; overflow:hidden;
+    }
+    .book-spine-fog { position:absolute; top:0; left:0; right:0; height:2px; }
+    .book-kind {
+      font-size:9px; letter-spacing:0.32em; text-transform:uppercase;
+      color:var(--sky);
+    }
+    .book-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:36px; font-weight:300; line-height:1.05;
+      color:var(--paper); letter-spacing:-0.01em;
+    }
+    .book-title em { font-style:italic; }
+    .book-author-tag {
+      font-size:10px; letter-spacing:0.22em; text-transform:uppercase;
+      color:rgba(236,230,214,0.55);
+    }
+    .book-body {
+      background:var(--paper2); padding:36px 40px;
+      display:flex; flex-direction:column; justify-content:space-between;
+      border-left:0.5px solid var(--ruleS);
+    }
+    .book-desc {
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      font-size:17px; color:var(--ink2); line-height:1.7; max-width:520px;
+    }
+    .book-link {
+      display:inline-block; margin-top:28px;
+      font-size:10px; letter-spacing:0.22em; text-transform:uppercase;
+      color:var(--seaD); text-decoration:none;
+      border-bottom:0.5px solid var(--fog); padding-bottom:2px;
+    }
+    .book-link:hover { color:var(--ink); border-color:var(--ink); }
+
     /* ── Fade-up animation ── */
     .fade-up { opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
     .fade-up.visible { opacity:1; transform:none; }
@@ -561,9 +627,15 @@
       .gl-section { padding:48px 24px 8px; }
       .gl-divider { padding:40px 24px 0; }
       .reports-main { grid-template-columns:1fr; }
-      .gallery-grid { grid-template-columns:1fr; height:auto; }
-      .gallery-grid .gk { height:220px; }
-      .gallery-side { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+      .gallery-row1{grid-template-columns:1fr;height:auto}
+      .gallery-row1 .gk{height:240px}
+      .gallery-row1-right{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+      .gallery-row2{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-row2 .gk{height:180px}
+      .gallery-row3{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-row3 .gk{height:180px}
+      .places-strip{grid-template-columns:repeat(2,1fr)}
+      .book-callout{grid-template-columns:1fr}
       .writing-row { grid-template-columns:1fr; gap:8px; }
       .writing-date { display:none; }
       .writing-source { justify-content:flex-start; }
@@ -649,7 +721,7 @@
     <div class="now-date serif">May 2026</div>
   </div>
   <div class="now-grid">
-    <div><div class="now-item-label">Reading</div><div class="now-item-value serif">Mallaby &amp; Kawabata, alternating</div></div>
+    <div><div class="now-item-label">Reading</div><div class="now-item-value serif">Annie Duke &amp; Rosling, alternating</div></div>
     <div><div class="now-item-label">Writing</div><div class="now-item-value serif">A piece on demurrage currencies</div></div>
     <div><div class="now-item-label">Walking</div><div class="now-item-value serif">Heuvelrug, weekend loop</div></div>
     <div><div class="now-item-label">Listening</div><div class="now-item-value serif">Nils Frahm · Spaces</div></div>
@@ -700,10 +772,10 @@
         <div class="report-strip-tag">Development Finance</div>
         <div class="report-strip-title serif">Impact Investment Frameworks for Emerging Markets</div>
       </div>
-      <div class="report-strip-card">
+      <a href="https://medium.com/do-the-right-thing/cross-shareholding-and-corporate-governance-in-japan-friend-or-foe-58dfe01c4f9d?sk=ceb35ace971ef16fe46d0dcef20a5f10" target="_blank" rel="noopener" class="report-strip-card" style="text-decoration:none;display:block;cursor:pointer">
         <div class="report-strip-tag">Governance · Japan</div>
-        <div class="report-strip-title serif">Cross-Shareholding &amp; Corporate Governance</div>
-      </div>
+        <div class="report-strip-title serif">Cross-Shareholding &amp; Corporate Governance ↗</div>
+      </a>
     </div>
   </div>
 </div>
@@ -718,21 +790,75 @@
     </div>
     <span class="gl-section-link">Full gallery →</span>
   </div>
-  <div class="gallery-grid">
+  <!-- Row 1: tall hero left + 2 stacked right -->
+  <div class="gallery-row1">
     <div class="gk">
-      <img src="/gallery-1.jpg" alt="Oudegracht, late afternoon" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <img src="/utrecht-1.jpg" alt="Early spring, still" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(155deg,#92a7b7,#6f879a)"></div>
-      <span class="gk-caption serif">Oudegracht, late afternoon</span>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Early spring, still</span>
     </div>
-    <div class="gallery-side">
+    <div class="gallery-row1-right">
       <div class="gk">
-        <img src="/gallery-2.jpg" alt="Canal light, winter" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+        <img src="/utrecht-2.jpg" alt="Slow April" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
         <div class="gk-fallback" style="display:none;background:linear-gradient(140deg,#b9c8d4,#92a7b7)"></div>
+        <div class="gk-overlay"></div>
+        <span class="gk-caption serif">Slow April</span>
       </div>
       <div class="gk">
-        <img src="/gallery-3.jpg" alt="Dom tower, dusk" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+        <img src="/utrecht-3.jpg" alt="Canal steps" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
         <div class="gk-fallback" style="display:none;background:linear-gradient(150deg,#d6c2b0,#b9a08e)"></div>
+        <div class="gk-overlay"></div>
+        <span class="gk-caption serif">Canal steps</span>
       </div>
+    </div>
+  </div>
+  <!-- Row 2: 4 equal -->
+  <div class="gallery-row2">
+    <div class="gk">
+      <img src="/utrecht-4.jpg" alt="November mist" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#8896a4,#6f879a)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">November mist</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-5.jpg" alt="December, grey" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(135deg,#7a8896,#5a6878)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">December, grey</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-6.jpg" alt="After dark" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(160deg,#2c3845,#1a2530)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">After dark</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-7.jpg" alt="Frames, water" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(140deg,#92a7b7,#b9c8d4)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Frames, water</span>
+    </div>
+  </div>
+  <!-- Row 3: 3 varied widths -->
+  <div class="gallery-row3">
+    <div class="gk">
+      <img src="/utrecht-8.jpg" alt="Winter noon" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(150deg,#c6d0d9,#92a7b7)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Winter noon</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-9.jpg" alt="Looking out" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(155deg,#b9c8d4,#8896a4)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Looking out</span>
+    </div>
+    <div class="gk">
+      <img src="/utrecht-10.jpg" alt="Golden hour" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#d6c2b0,#c4a882)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Golden hour</span>
     </div>
   </div>
 </div>
@@ -762,7 +888,7 @@
         <div class="writing-title serif">Switzerland Wants to Cap Its Population at 10 Million</div>
         <div class="writing-excerpt">On June 14, 2026 Switzerland votes on something no wealthy democracy has ever tried: a hard population cap. The polls are dead even.</div>
       </div>
-      <div class="writing-source"><span class="writing-dot dot-med"></span><a href="https://medium.com/@ambuj1tripathi" target="_blank" rel="noopener" class="writing-link">Medium →</a></div>
+      <div class="writing-source"><span class="writing-dot dot-med"></span><a href="https://medium.com/@ambuj1tripathi/the-money-that-punishes-you-for-saving-it-f51491041aa8" target="_blank" rel="noopener" class="writing-link">Medium →</a></div>
     </div>
     <div class="writing-row">
       <div><div class="writing-date">Jan 2026</div><div class="writing-topic serif">Development Finance</div></div>
@@ -809,12 +935,14 @@
     </div>
   </div>
   <div class="reading-grid">
-    <div class="reading-row"><span class="reading-dot" style="background:var(--seaD);box-shadow:0 0 8px rgba(111,135,154,0.5)"></span><div><div class="reading-title serif">The Power Law</div><div class="reading-author">Sebastian Mallaby <span class="reading-note">— Venture capital as history, not hagiography.</span></div></div><span class="reading-status">Reading</span></div>
-    <div class="reading-row"><span class="reading-dot" style="background:var(--seaD);box-shadow:0 0 8px rgba(111,135,154,0.5)"></span><div><div class="reading-title serif">The Spider Network</div><div class="reading-author">David Enrich <span class="reading-note">— LIBOR, again. Familiar shapes.</span></div></div><span class="reading-status">Reading</span></div>
-    <div class="reading-row"><span class="reading-dot" style="background:var(--mist)"></span><div><div class="reading-title serif">Seeing Like a State</div><div class="reading-author">James C. Scott <span class="reading-note">— A second reading. Different book each time.</span></div></div><span class="reading-status">Finished</span></div>
-    <div class="reading-row"><span class="reading-dot" style="background:var(--mist)"></span><div><div class="reading-title serif">The Price of Time</div><div class="reading-author">Edward Chancellor <span class="reading-note">— Interest rates as moral philosophy.</span></div></div><span class="reading-status">Finished</span></div>
-    <div class="reading-row"><span class="reading-dot" style="background:var(--linen)"></span><div><div class="reading-title serif">Snow Country</div><div class="reading-author">Yasunari Kawabata <span class="reading-note">— Slow, quiet, cold. The right kind of evening book.</span></div></div><span class="reading-status">Bedside</span></div>
-    <div class="reading-row"><span class="reading-dot" style="background:var(--fog)"></span><div><div class="reading-title serif">Stolen Focus</div><div class="reading-author">Johann Hari</div></div><span class="reading-status">Queued</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--seaD);box-shadow:0 0 8px rgba(111,135,154,0.5)"></span><div><div class="reading-title serif">Thinking in Bets</div><div class="reading-author">Annie Duke <span class="reading-note">— Decision-making when you can't know the outcome.</span></div></div><span class="reading-status">Reading</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--seaD);box-shadow:0 0 8px rgba(111,135,154,0.5)"></span><div><div class="reading-title serif">Factfulness</div><div class="reading-author">Hans Rosling <span class="reading-note">— The world is better than you think.</span></div></div><span class="reading-status">Reading</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--seaD);box-shadow:0 0 8px rgba(111,135,154,0.5)"></span><div><div class="reading-title serif">May Contain Lies</div><div class="reading-author">Alex Edmans <span class="reading-note">— On data, narrative, and what gets left out.</span></div></div><span class="reading-status">Reading</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--mist)"></span><div><div class="reading-title serif">East of Eden</div><div class="reading-author">John Steinbeck <span class="reading-note">— Still the biggest book I've ever read.</span></div></div><span class="reading-status">Finished</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--mist)"></span><div><div class="reading-title serif">Norwegian Wood</div><div class="reading-author">Haruki Murakami <span class="reading-note">— Quiet grief, very slowly told.</span></div></div><span class="reading-status">Finished</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--mist)"></span><div><div class="reading-title serif">One Hundred Years of Solitude</div><div class="reading-author">Gabriel García Márquez <span class="reading-note">— A whole world in one family.</span></div></div><span class="reading-status">Finished</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--mist)"></span><div><div class="reading-title serif">A Fine Balance</div><div class="reading-author">Rohinton Mistry <span class="reading-note">— India, 1975. Devastating.</span></div></div><span class="reading-status">Finished</span></div>
+    <div class="reading-row"><span class="reading-dot" style="background:var(--mist)"></span><div><div class="reading-title serif">Kafka on the Shore</div><div class="reading-author">Haruki Murakami <span class="reading-note">— Two stories that shouldn't fit together, do.</span></div></div><span class="reading-status">Finished</span></div>
   </div>
 </div>
 
@@ -867,12 +995,35 @@
   </div>
 </div>
 
+<!-- PLACES -->
+<div class="gl-divider"><div class="gl-divider-line"></div><span class="gl-divider-text">Places</span><div class="gl-divider-line"></div></div>
+<div class="gl-section fade-up">
+  <div class="gl-section-head">
+    <div>
+      <div class="gl-section-tag">06 · Coordinates</div>
+      <h2 class="gl-section-title serif">Where the boots have gone</h2>
+    </div>
+  </div>
+  <div class="places-strip">
+    <div class="place-card"><div class="place-code">NL</div><div class="place-name serif">Netherlands</div><div class="place-note serif">Home, for now.</div></div>
+    <div class="place-card"><div class="place-code">IN</div><div class="place-name serif">India</div><div class="place-note serif">Where it started.</div></div>
+    <div class="place-card"><div class="place-code">DE</div><div class="place-name serif">Germany</div><div class="place-note serif">Slate, forests, rain.</div></div>
+    <div class="place-card"><div class="place-code">NO</div><div class="place-name serif">Norway</div><div class="place-note serif">A plateau, endless.</div></div>
+    <div class="place-card"><div class="place-code">IS</div><div class="place-name serif">Iceland</div><div class="place-note serif">Light that doesn't set.</div></div>
+    <div class="place-card"><div class="place-code">AT</div><div class="place-name serif">Austria</div><div class="place-note serif">Mountains, coffee.</div></div>
+    <div class="place-card"><div class="place-code">HR</div><div class="place-name serif">Croatia</div><div class="place-note serif">Old stones, warm sea.</div></div>
+    <div class="place-card"><div class="place-code">GR</div><div class="place-name serif">Greece</div><div class="place-note serif">Light on white walls.</div></div>
+    <div class="place-card"><div class="place-code">CZ</div><div class="place-name serif">Czech Republic</div><div class="place-note serif">Cobblestones, dusk.</div></div>
+    <div class="place-card"><div class="place-code">BE</div><div class="place-name serif">Belgium</div><div class="place-note serif">Frites, rain, canals.</div></div>
+  </div>
+</div>
+
 <!-- SIDE PROJECTS -->
 <div class="gl-divider"><div class="gl-divider-line"></div><span class="gl-divider-text">Side notes</span><div class="gl-divider-line"></div></div>
 <div id="side" class="gl-section fade-up">
   <div class="gl-section-head">
     <div>
-      <div class="gl-section-tag">06 · Workshop</div>
+      <div class="gl-section-tag">07 · Workshop</div>
       <h2 class="gl-section-title serif">Quiet experiments on the side</h2>
     </div>
   </div>
@@ -896,6 +1047,35 @@
       <div class="side-accent" style="background:#a89b8a"></div>
       <div class="side-kind" style="color:#a89b8a">Photo</div>
       <div><div class="side-title serif">Field Notes</div><div class="side-sub">A photo journal of every Dutch canal town I've walked through.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNTS OF LIFE -->
+<div class="gl-divider"><div class="gl-divider-line"></div><span class="gl-divider-text">Published</span><div class="gl-divider-line"></div></div>
+<div class="gl-section fade-up">
+  <div class="gl-section-head">
+    <div>
+      <div class="gl-section-tag">08 · Author</div>
+      <h2 class="gl-section-title serif">A book, of sorts</h2>
+    </div>
+  </div>
+  <div class="book-callout">
+    <div class="book-spine">
+      <div class="fog-line book-spine-fog"></div>
+      <div class="book-kind">Memoir · 2023</div>
+      <div class="book-title serif">Accounts<br/>of <em>Life</em></div>
+      <div class="book-author-tag">Ambuj Tripathi</div>
+    </div>
+    <div class="book-body">
+      <p class="book-desc serif">
+        Not a typical book. A deep and introspective memoir that ponders the complexities
+        of human existence — interconnected events from 2023, peeling back the layers
+        of experiences, thoughts, and emotions. On change, reflection, personal growth,
+        and the pursuit of happiness. Each chapter a unique perspective on life's intricacies.
+        An invitation to embark on a quest for understanding alongside.
+      </p>
+      <a href="#contact" class="book-link">Get in touch to read it →</a>
     </div>
   </div>
 </div>
