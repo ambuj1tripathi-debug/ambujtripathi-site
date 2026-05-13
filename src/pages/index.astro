@@ -391,12 +391,11 @@
       background:linear-gradient(180deg,transparent 55%,rgba(42,53,64,0.45) 100%);
       pointer-events:none;
     }
-    .gallery-row1 { display:grid; grid-template-columns:1.6fr 1fr; gap:6px; height:420px; }
-    .gallery-row1-right { display:grid; grid-template-rows:1fr 1fr; gap:6px; }
-    .gallery-row2 { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; height:200px; }
-    .gallery-row3 { display:grid; grid-template-columns:1fr 1.4fr 1fr; gap:6px; margin-top:6px; height:220px; }
-    .gallery-row4 { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; height:200px; }
-    .gallery-row5 { display:grid; grid-template-columns:1fr 1.6fr 1fr; gap:6px; margin-top:6px; height:240px; }
+    .gallery-rA { display:grid; grid-template-columns:1.8fr 1fr; gap:6px; height:460px; }
+    .gallery-rB { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:6px; height:210px; }
+    .gallery-rC { display:grid; grid-template-columns:1fr 1.6fr; gap:6px; margin-top:6px; height:380px; }
+    .gallery-rD { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; height:195px; }
+    .gallery-rE { display:grid; grid-template-columns:1.4fr 1fr 1.4fr; gap:6px; margin-top:6px; height:280px; }
 
     /* ── Writing ── */
     .writing-list { border-top:0.5px solid var(--ruleS); }
@@ -686,17 +685,16 @@
       .gl-section { padding:48px 24px 8px; }
       .gl-divider { padding:40px 24px 0; }
       .reports-main { grid-template-columns:1fr; }
-      .gallery-row1{grid-template-columns:1fr;height:auto}
-      .gallery-row1 .gk{height:240px}
-      .gallery-row1-right{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-      .gallery-row2{grid-template-columns:1fr 1fr;height:auto}
-      .gallery-row2 .gk{height:180px}
-      .gallery-row3{grid-template-columns:1fr 1fr;height:auto}
-      .gallery-row3 .gk{height:180px}
-      .gallery-row4{grid-template-columns:1fr 1fr;height:auto}
-      .gallery-row4 .gk{height:180px}
-      .gallery-row5{grid-template-columns:1fr 1fr;height:auto}
-      .gallery-row5 .gk{height:180px}
+      .gallery-rA{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-rA .gk{height:220px}
+      .gallery-rB{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-rB .gk{height:170px}
+      .gallery-rC{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-rC .gk{height:200px}
+      .gallery-rD{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-rD .gk{height:160px}
+      .gallery-rE{grid-template-columns:1fr 1fr;height:auto}
+      .gallery-rE .gk{height:180px}
       .places-strip{grid-template-columns:repeat(2,1fr)}
       .book-callout{grid-template-columns:1fr}
       .writing-row { grid-template-columns:1fr; gap:8px; }
@@ -846,31 +844,29 @@
     </div>
     <span class="gl-section-link">Full gallery →</span>
   </div>
-  <!-- Row 1: tall left + 2 stacked right (photos 1–3) -->
-  <div class="gallery-row1">
+  <!-- Row A: big left (1.8fr) + small right (1fr) — photos 1, 2 -->
+  <div class="gallery-rA">
     <div class="gk">
       <img src="/utrecht-1.jpg" alt="Early spring, still" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(155deg,#92a7b7,#6f879a)"></div>
       <div class="gk-overlay"></div>
       <span class="gk-caption serif">Early spring, still</span>
     </div>
-    <div class="gallery-row1-right">
-      <div class="gk">
-        <img src="/utrecht-2.jpg" alt="Slow April" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-        <div class="gk-fallback" style="display:none;background:linear-gradient(140deg,#b9c8d4,#92a7b7)"></div>
-        <div class="gk-overlay"></div>
-        <span class="gk-caption serif">Slow April</span>
-      </div>
-      <div class="gk">
-        <img src="/utrecht-3.jpg" alt="Canal steps" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-        <div class="gk-fallback" style="display:none;background:linear-gradient(150deg,#d6c2b0,#b9a08e)"></div>
-        <div class="gk-overlay"></div>
-        <span class="gk-caption serif">Canal steps</span>
-      </div>
+    <div class="gk">
+      <img src="/utrecht-2.jpg" alt="Slow April" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(140deg,#b9c8d4,#92a7b7)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Slow April</span>
     </div>
   </div>
-  <!-- Row 2: 4 equal (photos 4–7) -->
-  <div class="gallery-row2">
+  <!-- Row B: 3 equal — photos 3, 4, 8 -->
+  <div class="gallery-rB">
+    <div class="gk">
+      <img src="/utrecht-3.jpg" alt="Canal steps" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div class="gk-fallback" style="display:none;background:linear-gradient(150deg,#d6c2b0,#b9a08e)"></div>
+      <div class="gk-overlay"></div>
+      <span class="gk-caption serif">Canal steps</span>
+    </div>
     <div class="gk">
       <img src="/utrecht-4.jpg" alt="November mist" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#8896a4,#6f879a)"></div>
@@ -878,32 +874,14 @@
       <span class="gk-caption serif">November mist</span>
     </div>
     <div class="gk">
-      <img src="/utrecht-5.jpg" alt="December, grey" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-      <div class="gk-fallback" style="display:none;background:linear-gradient(135deg,#7a8896,#5a6878)"></div>
-      <div class="gk-overlay"></div>
-      <span class="gk-caption serif">December, grey</span>
-    </div>
-    <div class="gk">
-      <img src="/utrecht-6.jpg" alt="After dark" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-      <div class="gk-fallback" style="display:none;background:linear-gradient(160deg,#2c3845,#1a2530)"></div>
-      <div class="gk-overlay"></div>
-      <span class="gk-caption serif">After dark</span>
-    </div>
-    <div class="gk">
-      <img src="/utrecht-7.jpg" alt="Frames, water" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-      <div class="gk-fallback" style="display:none;background:linear-gradient(140deg,#92a7b7,#b9c8d4)"></div>
-      <div class="gk-overlay"></div>
-      <span class="gk-caption serif">Frames, water</span>
-    </div>
-  </div>
-  <!-- Row 3: varied widths (photos 8–10) -->
-  <div class="gallery-row3">
-    <div class="gk">
       <img src="/utrecht-8.jpg" alt="Winter noon" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(150deg,#c6d0d9,#92a7b7)"></div>
       <div class="gk-overlay"></div>
       <span class="gk-caption serif">Winter noon</span>
     </div>
+  </div>
+  <!-- Row C: small left (1fr) + big right (1.6fr) — photos 9, 10 -->
+  <div class="gallery-rC">
     <div class="gk">
       <img src="/utrecht-9.jpg" alt="Looking out" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(155deg,#b9c8d4,#8896a4)"></div>
@@ -917,8 +895,8 @@
       <span class="gk-caption serif">Golden hour</span>
     </div>
   </div>
-  <!-- Row 4: 4 equal (photos 11–14) -->
-  <div class="gallery-row4">
+  <!-- Row D: 4 equal — photos 11–14 -->
+  <div class="gallery-rD">
     <div class="gk">
       <img src="/utrecht-11.jpg" alt="Summer light" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#d4c0a8,#c6b09c)"></div>
@@ -938,14 +916,14 @@
       <span class="gk-caption serif">Quiet afternoon</span>
     </div>
     <div class="gk">
-      <img src="/utrecht-14.jpg" alt="Bridge & shadow" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <img src="/utrecht-14.jpg" alt="Bridge &amp; shadow" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(150deg,#8896a4,#6a7a88)"></div>
       <div class="gk-overlay"></div>
       <span class="gk-caption serif">Bridge &amp; shadow</span>
     </div>
   </div>
-  <!-- Row 5: wide centre (photos 15–17) -->
-  <div class="gallery-row5">
+  <!-- Row E: flanked wide (1.4fr + 1fr + 1.4fr) — photos 15–17 -->
+  <div class="gallery-rE">
     <div class="gk">
       <img src="/utrecht-15.jpg" alt="Morning walk" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
       <div class="gk-fallback" style="display:none;background:linear-gradient(145deg,#c8c0c6,#b9c8d4)"></div>
