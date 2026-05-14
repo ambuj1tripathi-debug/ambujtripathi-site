@@ -638,29 +638,35 @@
       font-style:italic; font-size:13px; color:#7a8896;
     }
 
-    /* ── Napkin Map ── */
-    .map-wrap {
-      position:relative; background:#f0e9d8; line-height:0;
+    /* ── Passport stamp grid ── */
+    .stamp-grid {
+      display:grid; grid-template-columns:repeat(5,1fr);
       border-top:0.5px solid var(--ruleS);
     }
-    .map-wrap svg { width:100%; display:block; }
-    .map-tip {
-      position:absolute; pointer-events:none;
-      background:rgba(244,237,216,0.97);
-      border:0.5px solid rgba(140,110,70,0.22);
-      padding:9px 13px; border-radius:1px;
-      box-shadow:0 2px 10px rgba(80,60,30,0.10);
-      opacity:0; transition:opacity 0.15s;
-      max-width:190px; line-height:1;
+    .stamp {
+      padding:28px 24px 24px;
+      border-right:0.5px solid var(--ruleS);
+      border-bottom:0.5px solid var(--ruleS);
+      display:flex; flex-direction:column; gap:10px;
     }
-    .map-tip.vis { opacity:1; }
-    .map-tip-name {
-      font-size:10px; letter-spacing:0.22em; text-transform:uppercase;
-      color:#4a3820; margin-bottom:5px;
+    .stamp:nth-child(5n) { border-right:none; }
+    .stamp-code {
+      font-family:'Cormorant Garamond',serif;
+      font-size:38px; font-weight:300; letter-spacing:0.04em;
+      color:var(--ink); line-height:1;
     }
-    .map-tip-note {
+    .stamp-name {
+      font-size:9px; letter-spacing:0.28em; text-transform:uppercase;
+      color:var(--mist);
+    }
+    .stamp-note {
       font-family:'Cormorant Garamond',serif; font-style:italic;
-      font-size:14px; color:#7a6040; line-height:1.4;
+      font-size:13px; color:var(--ink2); line-height:1.5; margin-top:2px;
+    }
+    @media(max-width:768px){
+      .stamp-grid { grid-template-columns:repeat(2,1fr); }
+      .stamp:nth-child(5n) { border-right:0.5px solid var(--ruleS); }
+      .stamp:nth-child(2n) { border-right:none; }
     }
     /* legacy — unused but kept to not break mobile query ref */
     .place-note {
@@ -751,8 +757,6 @@
       footer { padding:16px 24px; flex-direction:column; gap:6px; text-align:center; }
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 </head>
 <body>
 
@@ -1093,12 +1097,17 @@
       <h2 class="gl-section-title serif">Where the boots have gone</h2>
     </div>
   </div>
-  <div class="map-wrap" id="mapWrap">
-    <div class="map-tip" id="mapTip">
-      <div class="map-tip-name" id="mapTipName"></div>
-      <div class="map-tip-note serif" id="mapTipNote"></div>
-    </div>
-    <svg id="worldMap"></svg>
+  <div class="stamp-grid">
+    <div class="stamp"><div class="stamp-code">NL</div><div class="stamp-name">Netherlands</div><div class="stamp-note">Home, for now.</div></div>
+    <div class="stamp"><div class="stamp-code">IN</div><div class="stamp-name">India</div><div class="stamp-note">Where it started.</div></div>
+    <div class="stamp"><div class="stamp-code">DE</div><div class="stamp-name">Germany</div><div class="stamp-note">Slate, forests, rain.</div></div>
+    <div class="stamp"><div class="stamp-code">NO</div><div class="stamp-name">Norway</div><div class="stamp-note">A plateau, endless.</div></div>
+    <div class="stamp"><div class="stamp-code">IS</div><div class="stamp-name">Iceland</div><div class="stamp-note">Light that doesn't set.</div></div>
+    <div class="stamp"><div class="stamp-code">AT</div><div class="stamp-name">Austria</div><div class="stamp-note">Mountains, coffee.</div></div>
+    <div class="stamp"><div class="stamp-code">HR</div><div class="stamp-name">Croatia</div><div class="stamp-note">Old stones, warm sea.</div></div>
+    <div class="stamp"><div class="stamp-code">GR</div><div class="stamp-name">Greece</div><div class="stamp-note">Light on white walls.</div></div>
+    <div class="stamp"><div class="stamp-code">CZ</div><div class="stamp-name">Czech Republic</div><div class="stamp-note">Cobblestones, dusk.</div></div>
+    <div class="stamp"><div class="stamp-code">BE</div><div class="stamp-name">Belgium</div><div class="stamp-note">Frites, rain, canals.</div></div>
   </div>
 </div>
 
@@ -1223,94 +1232,6 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 setTimeout(() => { const h = document.querySelector('.hero-left'); if (h) h.classList.add('visible'); }, 80);
 
-// ── Napkin map ──
-(function() {
-  const PLACES = [
-    { name:'Netherlands',   note:'Home, for now.',          ll:[5.3,  52.1] },
-    { name:'India',         note:'Where it started.',       ll:[78.9, 20.6] },
-    { name:'Germany',       note:'Slate, forests, rain.',   ll:[10.4, 51.2] },
-    { name:'Norway',        note:'A plateau, endless.',     ll:[8.5,  60.5] },
-    { name:'Iceland',       note:"Light that doesn't set.", ll:[-18.9,64.9] },
-    { name:'Austria',       note:'Mountains, coffee.',      ll:[14.6, 47.7] },
-    { name:'Croatia',       note:'Old stones, warm sea.',   ll:[15.2, 45.1] },
-    { name:'Greece',        note:'Light on white walls.',   ll:[21.8, 39.1] },
-    { name:'Czech Republic',note:'Cobblestones, dusk.',     ll:[15.5, 49.8] },
-    { name:'Belgium',       note:'Frites, rain, canals.',   ll:[4.5,  50.5] },
-  ];
-
-  const wrap  = document.getElementById('mapWrap');
-  const svg   = document.getElementById('worldMap');
-  const tip   = document.getElementById('mapTip');
-  const tName = document.getElementById('mapTipName');
-  const tNote = document.getElementById('mapTipNote');
-
-  const W = wrap.clientWidth || 960;
-  const H = Math.round(W * 0.52);
-
-  // Mercator zoomed to Europe + India
-  const bounds = { type:'Feature', geometry:{ type:'Polygon',
-    coordinates:[[[-28,5],[105,5],[105,73],[-28,73],[-28,5]]] }};
-  const proj = d3.geoMercator().fitExtent([[28,18],[W-18,H-18]], bounds);
-  const path = d3.geoPath().projection(proj);
-
-  const s = d3.select(svg).attr('viewBox',`0 0 ${W} ${H}`).attr('width',W).attr('height',H);
-
-  // sketch/wobble filter
-  const defs = s.append('defs');
-  const f = defs.append('filter').attr('id','sketchy').attr('x','-4%').attr('y','-4%').attr('width','108%').attr('height','108%');
-  f.append('feTurbulence').attr('type','fractalNoise').attr('baseFrequency','0.032').attr('numOctaves','4').attr('seed','9').attr('result','n');
-  f.append('feDisplacementMap').attr('in','SourceGraphic').attr('in2','n').attr('scale','2.8').attr('xChannelSelector','R').attr('yChannelSelector','G');
-
-  // paper background
-  s.append('rect').attr('width',W).attr('height',H).attr('fill','#f0e9d8');
-
-  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
-    const features = topojson.feature(world, world.objects.countries).features;
-
-    // landmasses — ink sketch style
-    s.append('g').attr('filter','url(#sketchy)')
-      .selectAll('path').data(features).join('path')
-      .attr('d', path)
-      .attr('fill','#e6dbc6')
-      .attr('stroke','#b8a888')
-      .attr('stroke-width', 0.55)
-      .attr('stroke-linejoin','round');
-
-    // dots
-    PLACES.forEach(p => {
-      const [x,y] = proj(p.ll);
-      if (x < 0 || x > W || y < 0 || y > H) return;
-      // soft halo
-      s.append('circle').attr('cx',x).attr('cy',y).attr('r',9)
-        .attr('fill','rgba(180,140,80,0.12)').attr('pointer-events','none');
-      // dot
-      s.append('circle').attr('cx',x).attr('cy',y).attr('r',4.5)
-        .attr('fill','#b08840').attr('stroke','#f0e9d8').attr('stroke-width',1.5)
-        .style('cursor','pointer')
-        .on('mouseenter',  ev => show(p,ev))
-        .on('mousemove',   ev => move(ev))
-        .on('mouseleave',  ()  => tip.classList.remove('vis'))
-        .on('touchstart',  ev => { ev.preventDefault(); show(p,ev.touches[0]); move(ev.touches[0]); })
-        .on('touchend',    ()  => setTimeout(()=>tip.classList.remove('vis'),1400));
-    });
-
-    // subtle "India" label so it reads clearly (it sits far right)
-    const [ix,iy] = proj([80, 13]);
-    s.append('text').attr('x',ix).attr('y',iy+18)
-      .attr('text-anchor','middle')
-      .attr('font-family','Cormorant Garamond, serif').attr('font-style','italic')
-      .attr('font-size', Math.max(10, W*0.012)).attr('fill','#a08858').attr('opacity',0.6)
-      .text('India');
-  });
-
-  function show(p,ev) { tName.textContent=p.name; tNote.textContent=p.note; tip.classList.add('vis'); move(ev); }
-  function move(ev) {
-    const r = wrap.getBoundingClientRect();
-    let x = ev.clientX-r.left+14, y = ev.clientY-r.top-10;
-    if (x+200>r.width) x-=214;
-    tip.style.left=x+'px'; tip.style.top=y+'px';
-  }
-})();
 
 function handleSubmit(e) {
   e.preventDefault();
