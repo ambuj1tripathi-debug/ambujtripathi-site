@@ -397,6 +397,39 @@
     .gallery-rD { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; height:195px; }
     .gallery-rE { display:grid; grid-template-columns:1.4fr 1fr 1.4fr; gap:6px; margin-top:6px; height:280px; }
 
+    /* ── Now ── */
+    .now-page {
+      padding:64px;
+      border-bottom:0.5px solid var(--ruleS);
+      display:grid; grid-template-columns:220px 1fr; gap:64px;
+      background:var(--paper2);
+    }
+    .now-page-meta {
+      padding-top:4px;
+    }
+    .now-page-label {
+      font-size:10px; letter-spacing:0.32em; text-transform:uppercase;
+      color:var(--mist); margin-bottom:12px;
+    }
+    .now-page-date {
+      font-family:'Cormorant Garamond',serif;
+      font-size:22px; font-weight:300; font-style:italic;
+      color:var(--ink); line-height:1.3;
+    }
+    .now-page-place {
+      font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--seaD); margin-top:8px;
+    }
+    .now-page-body { display:flex; flex-direction:column; gap:20px; }
+    .now-page-para {
+      font-size:15.5px; color:var(--ink2); line-height:1.8;
+      border-left:1.5px solid var(--ruleS); padding-left:20px;
+    }
+    .now-page-para:first-child { border-left-color:var(--seaD); color:var(--ink); }
+    @media(max-width:768px){
+      .now-page { grid-template-columns:1fr; gap:32px; padding:40px 24px; }
+    }
+
     /* ── Writing ── */
     .writing-list { border-top:0.5px solid var(--ruleS); }
     .writing-row {
@@ -718,6 +751,7 @@
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#photography">Photography</a></li>
+    <li><a href="#now">Now</a></li>
     <li><a href="#writing">Writing</a></li>
     <li><a href="#reading">Reading</a></li>
     <li><a href="#side">Notes</a></li>
@@ -936,6 +970,23 @@
       <div class="gk-overlay"></div>
       <span class="gk-caption serif">End of day</span>
     </div>
+  </div>
+</div>
+
+<!-- NOW -->
+<div class="gl-divider"><div class="gl-divider-line"></div><span class="gl-divider-text">Now</span><div class="gl-divider-line"></div></div>
+<div id="now" class="now-page fade-up">
+  <div class="now-page-meta">
+    <div class="now-page-label">Now page</div>
+    <div class="now-page-date">May 2026</div>
+    <div class="now-page-place">Utrecht</div>
+  </div>
+  <div class="now-page-body">
+    <p class="now-page-para">Searching for a credit or investment risk role in European development finance — DFIs, impact funds, sustainable lending. Five years of public sector banking behind me, an MBA from RSM, and a growing conviction that the most interesting credit problems sit at the intersection of capital and consequence.</p>
+    <p class="now-page-para">Writing in parallel — long reads on energy, geopolitics, and development finance. The Hormuz piece took three weeks. Worth it.</p>
+    <p class="now-page-para">Built a small Python tool that generates end-of-day signals for Nifty 50 futures. Mostly for discipline. Partly for curiosity.</p>
+    <p class="now-page-para">Reading Annie Duke and Alex Edmans at the same time, which turns out to be a good combination.</p>
+    <p class="now-page-para">Open to conversations — about roles, about writing, about whatever you're working on.</p>
   </div>
 </div>
 
