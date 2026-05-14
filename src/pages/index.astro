@@ -638,22 +638,29 @@
       font-style:italic; font-size:13px; color:#7a8896;
     }
 
-    /* ── Places ── */
-    .places-strip {
-      display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
-      background:var(--ruleS);
+    /* ── World Map ── */
+    .map-wrap {
+      position:relative; background:#111418; line-height:0;
     }
-    .place-card {
-      background:var(--paper2); padding:20px 18px;
-      display:flex; flex-direction:column; gap:6px;
+    .map-wrap svg { width:100%; display:block; }
+    .map-tip {
+      position:absolute; pointer-events:none;
+      background:rgba(16,20,26,0.94);
+      border:0.5px solid rgba(255,255,255,0.10);
+      padding:9px 13px; border-radius:2px;
+      opacity:0; transition:opacity 0.15s;
+      max-width:190px; line-height:1;
     }
-    .place-code {
-      font-size:22px; line-height:1;
+    .map-tip.vis { opacity:1; }
+    .map-tip-name {
+      font-size:10px; letter-spacing:0.22em; text-transform:uppercase;
+      color:#d6c2b0; margin-bottom:5px;
     }
-    .place-name {
-      font-family:'Cormorant Garamond',serif;
-      font-size:18px; color:var(--ink); font-weight:400; line-height:1.2;
+    .map-tip-note {
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      font-size:14px; color:#8896a4; line-height:1.4;
     }
+    /* legacy — unused but kept to not break mobile query ref */
     .place-note {
       font-family:'Cormorant Garamond',serif; font-style:italic;
       font-size:12px; color:var(--mist); line-height:1.4;
@@ -742,6 +749,8 @@
       footer { padding:16px 24px; flex-direction:column; gap:6px; text-align:center; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 </head>
 <body>
 
@@ -1082,17 +1091,12 @@
       <h2 class="gl-section-title serif">Where the boots have gone</h2>
     </div>
   </div>
-  <div class="places-strip">
-    <div class="place-card"><div class="place-code">🇳🇱</div><div class="place-name serif">Netherlands</div><div class="place-note serif">Home, for now.</div></div>
-    <div class="place-card"><div class="place-code">🇮🇳</div><div class="place-name serif">India</div><div class="place-note serif">Where it started.</div></div>
-    <div class="place-card"><div class="place-code">🇩🇪</div><div class="place-name serif">Germany</div><div class="place-note serif">Slate, forests, rain.</div></div>
-    <div class="place-card"><div class="place-code">🇳🇴</div><div class="place-name serif">Norway</div><div class="place-note serif">A plateau, endless.</div></div>
-    <div class="place-card"><div class="place-code">🇮🇸</div><div class="place-name serif">Iceland</div><div class="place-note serif">Light that doesn't set.</div></div>
-    <div class="place-card"><div class="place-code">🇦🇹</div><div class="place-name serif">Austria</div><div class="place-note serif">Mountains, coffee.</div></div>
-    <div class="place-card"><div class="place-code">🇭🇷</div><div class="place-name serif">Croatia</div><div class="place-note serif">Old stones, warm sea.</div></div>
-    <div class="place-card"><div class="place-code">🇬🇷</div><div class="place-name serif">Greece</div><div class="place-note serif">Light on white walls.</div></div>
-    <div class="place-card"><div class="place-code">🇨🇿</div><div class="place-name serif">Czech Republic</div><div class="place-note serif">Cobblestones, dusk.</div></div>
-    <div class="place-card"><div class="place-code">🇧🇪</div><div class="place-name serif">Belgium</div><div class="place-note serif">Frites, rain, canals.</div></div>
+  <div class="map-wrap" id="mapWrap">
+    <div class="map-tip" id="mapTip">
+      <div class="map-tip-name" id="mapTipName"></div>
+      <div class="map-tip-note serif" id="mapTipNote"></div>
+    </div>
+    <svg id="worldMap"></svg>
   </div>
 </div>
 
@@ -1216,6 +1220,73 @@ const obs = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 setTimeout(() => { const h = document.querySelector('.hero-left'); if (h) h.classList.add('visible'); }, 80);
+
+// ── World map ──
+(function() {
+  const PLACES = [
+    { name:'Netherlands',   note:'Home, for now.',          ll:[5.3,  52.1] },
+    { name:'India',         note:'Where it started.',       ll:[78.9, 20.6] },
+    { name:'Germany',       note:'Slate, forests, rain.',   ll:[10.4, 51.2] },
+    { name:'Norway',        note:'A plateau, endless.',     ll:[8.5,  60.5] },
+    { name:'Iceland',       note:"Light that doesn't set.", ll:[-18.9,64.9] },
+    { name:'Austria',       note:'Mountains, coffee.',      ll:[14.6, 47.7] },
+    { name:'Croatia',       note:'Old stones, warm sea.',   ll:[15.2, 45.1] },
+    { name:'Greece',        note:'Light on white walls.',   ll:[21.8, 39.1] },
+    { name:'Czech Republic',note:'Cobblestones, dusk.',     ll:[15.5, 49.8] },
+    { name:'Belgium',       note:'Frites, rain, canals.',   ll:[4.5,  50.5] },
+  ];
+
+  const wrap  = document.getElementById('mapWrap');
+  const svg   = document.getElementById('worldMap');
+  const tip   = document.getElementById('mapTip');
+  const tName = document.getElementById('mapTipName');
+  const tNote = document.getElementById('mapTipNote');
+
+  const W = wrap.clientWidth || 960;
+  const H = Math.round(W * 0.5);
+  const proj = d3.geoNaturalEarth1().scale(W / 6.28).translate([W / 2, H / 2]);
+  const path = d3.geoPath().projection(proj);
+
+  const s = d3.select(svg).attr('viewBox',`0 0 ${W} ${H}`).attr('width',W).attr('height',H);
+
+  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+    // ocean background
+    s.append('path').datum({type:'Sphere'}).attr('d',path).attr('fill','#111418');
+    // landmasses
+    s.append('g').selectAll('path')
+      .data(topojson.feature(world, world.objects.countries).features)
+      .join('path').attr('d',path).attr('fill','#252c36').attr('stroke','none');
+
+    // dots
+    PLACES.forEach(p => {
+      const [x,y] = proj(p.ll);
+      s.append('circle')
+        .attr('cx',x).attr('cy',y).attr('r',4)
+        .attr('fill','#d6c2b0').attr('stroke','#111418').attr('stroke-width',1.5)
+        .style('cursor','pointer')
+        .on('mouseenter',  ev => show(p, ev))
+        .on('mousemove',   ev => move(ev))
+        .on('mouseleave',  ()  => tip.classList.remove('vis'))
+        .on('touchstart',  ev => { ev.preventDefault(); show(p, ev.touches[0]); move(ev.touches[0]); })
+        .on('touchend',    ()  => setTimeout(() => tip.classList.remove('vis'), 1400));
+    });
+  });
+
+  function show(p, ev) {
+    tName.textContent = p.name;
+    tNote.textContent = p.note;
+    tip.classList.add('vis');
+    move(ev);
+  }
+  function move(ev) {
+    const r = wrap.getBoundingClientRect();
+    let x = ev.clientX - r.left + 14;
+    let y = ev.clientY - r.top  - 10;
+    if (x + 200 > r.width) x -= 214;
+    tip.style.left = x + 'px';
+    tip.style.top  = y + 'px';
+  }
+})();
 
 function handleSubmit(e) {
   e.preventDefault();
